@@ -1,0 +1,24 @@
+{
+  "name": "coding-challenge",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Ishimwem/coding-challenge.git"
+  },
+  "author": "Marie Merci Ishimwe",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Ishimwem/coding-challenge/issues"
+  },
+  "homepage": "https://github.com/Ishimwem/coding-challenge#readme",
+  "dependencies": {
+    "blockcypher": "^0.2.0",
+    "request": "^2.88.0",
+    "request-promise": "^4.2.2"
+  }
+}
