@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+        <title>Coding Challenge</title>
+
+        <script src="./index.js"></script>
+        <!-- <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script> -->
+    </head>
+
+    <body>
+        <!-- <div class="topnav">
+            <a class="active" href="#balance">Balance</a>
+            <a href="#payment">Payment</a>
+        </div> -->
+
+        <h1>Get Address Balance</h1>
+
+        <div id="balance">
+            <form class="balance-form">
+                <input type="text" name="address" placeholder="Testnet address"/>
+                <input type="button" onclick="getBalance(this.form)" value="Get Balance"/>      
+            </form>
+            <div id="addrBalance"></div>
+        </div>
+
+        <h1>Make Payment</h1>
+
+        <div id="payment">
+            <form class="payment-form">
+                    <input type="text" name="source" placeholder="Source address"/>
+                    <input type="text" name="destination" placeholder="Destination address"/>
+                    <input type="button" onclick="makePayment(this.form)" value="Pay"/>      
+                </form>
+                <div id="confirmation"></div>
+
+        </div>
+    </body>
+</html>

@@ -1,70 +1,51 @@
 const request = require('request');
 const rp = require('request-promise');
 
+var express = require('express');
+var app = express();
+const PORT = process.env.PORT || 3000;
+
+app.get('/', (req, res) => {
+    res.sendFile('./index.html', {root: __dirname});
+});
+
 const url = 'https://api.blockcypher.com/v1/btc/test3';
 var source = null;
 var dest = null;
 
-function getSpecificBalance() {
+
+function getBalance(form) {
+    alert("got in get balance");
+    var addr = form.address.value;
     var data = {
-      method: 'GET',
-      uri: url + '/addr/' + source + '/balance',
-      qs: {},
-      json: true
-    }; 
-  
+        method: 'GET',
+        uri: url + '/addr/' + addr + '/balance',
+        qs: {},
+        json: true
+    };
+
     rp(data).then(
-      function(body){
-        console.log("The balance for address ", body['address'], ": ", body['balance']);
-      });
-}
-  
-function generateDestination() {
-    var data = {
-        method: 'POST',
-        uri: url + '/addrs?token=c14430584b8e4323985d81590fb535fc',
-        qs: {},
-        json: true
-    };
+        function(body) {
+            var bal = body['address'];
+            var p = '<p> The balance for ' + addr + ': ' + bal + '</p>';
+            document.getElementById('addrBalance').appendChild(p); 
 
-    return rp(data);
-}
-
-function generateSource(addr) {
-    //assign the destination address to global variable dest
-    dest = addr['address'];
-    var data = {
-        method: 'POST',
-        uri: url + '/addrs?token=c14430584b8e4323985d81590fb535fc',
-        qs: {},
-        json: true
-    };
-
-    return rp(data);
+        }
+    ).catch(
+        function(err) {
+            console.log(err);
+            var p = '<p> Unable to get the balance</p>';
+            document.getElementById('addrBalance').appendChild(p);
+        }
+    );
 }
 
-function fundSource(addr) {
-    source = addr['address'];
-    console.log(source);
-    var data = {"address": source, "amount": 10000};
-    var d = {
-        method: 'POST',
-        uri: url + '/faucet?token=c14430584b8e4323985d81590fb535fc',
-        body: data,
-        json: true
-    };
-    //console.log (d);
-
-    // rp(d).then(function(body)
-    //   {console.log("faucet: ", body);}).catch(function(e){console.log(e);});
-
-    return rp(d);
-}
-
-function makeTransaction() {
+function makeTransaction(form) {
+    var source = form.source.value;
+    var dest  = form.destination.value;
     var tx = {
         inputs: [{ addresses: [ source ] }],
-        outputs: [{ addresses: [ destination ], value: 3000}]
+        outputs: [{ addresses: [ dest ], value: 3000}]
     };
 
     var data = {
@@ -74,14 +55,22 @@ function makeTransaction() {
         json: true
     };
 
-    return rp(data);
+    rp(data).then(
+        function(body){
+            var p = '<p> Transaction successful!</p>';
+            document.getElementById('confirmation').appendChild(p);
+        }
+    ).catch(
+        function(err) {
+            console.log(err);
+            var p = '<p> Transaction failed</p>';
+            document.getElementById('confirmation').appendChild(p);
+        }
+    );
 }
 
+app.listen(PORT, () => {
+    console.log('Server listening on port ' + PORT);
+});
 
-generateDestination()
-.then(generateSource)
-.then(fundSource)
-.then(makeTransaction)
-.then(getSpecificBalance)
-.catch(function(e){console.log(e);});
-//generateAddress().then(fundSource).catch(function(e){console.log(e);});
+

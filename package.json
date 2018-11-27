@@ -18,6 +18,7 @@
   "homepage": "https://github.com/Ishimwem/coding-challenge#readme",
   "dependencies": {
     "blockcypher": "^0.2.0",
+    "express": "^4.16.4",
     "request": "^2.88.0",
     "request-promise": "^4.2.2"
   }
