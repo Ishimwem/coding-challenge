@@ -17,7 +17,10 @@
   },
   "homepage": "https://github.com/Ishimwem/coding-challenge#readme",
   "dependencies": {
+    "@types/bitcoinjs-lib": "^4.0.0",
+    "bigi": "^1.4.2",
     "blockcypher": "^0.2.0",
+    "buffer": "^5.2.1",
     "express": "^4.16.4",
     "request": "^2.88.0",
     "request-promise": "^4.2.2"
